@@ -14,7 +14,7 @@ defmodule Constable do
 
     children = [
       # Start the endpoint when the application starts
-      worker(Constable.Endpoint, []),
+      worker(ConstableWeb.Endpoint, []),
       worker(Constable.Repo, [])
 
       # Here you could define other workers and supervisors as children
@@ -39,7 +39,7 @@ defmodule Constable do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    Constable.Endpoint.config_change(changed, removed)
+    ConstableWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end
