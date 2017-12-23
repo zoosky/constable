@@ -14,21 +14,17 @@ exports.config = {
   },
 
   conventions: {
-    assets: /^(lib\/constable_web\/static\/assets)/
+    assets: /^(static)/
   },
 
   paths: {
-    watched: [
-      "lib/constable_web/static",
-      "test/static"
-    ],
-
-    public: "priv/static"
+    watched: ["static", "css", "js", "vendor"],
+    public: "../priv/static"
   },
 
   plugins: {
     babel: {
-      ignore: [/lib\/constable_web\/static\/vendor/],
+      ignore: [/vendor/],
       presets: ["es2015"]
     },
     postcss: {
@@ -49,7 +45,7 @@ exports.config = {
 
   modules: {
     autoRequire: {
-      "js/app.js": ["lib/constable_web/static/js/app"]
+      "js/app.js": ["js/app"]
     }
   },
 
