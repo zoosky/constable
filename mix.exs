@@ -26,7 +26,7 @@ defmodule Constable.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [mod: {Constable, []},
+    [mod: {Constable.Application, []},
      applications: app_list()]
   end
 

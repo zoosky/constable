@@ -1,4 +1,4 @@
-defmodule Constable do
+defmodule Constable.Application do
   use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
