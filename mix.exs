@@ -40,7 +40,8 @@ defmodule Constable.Mixfile do
     :httpoison,
     :logger,
     :phoenix,
-    :postgrex
+    :postgrex,
+    :furlex
   ]
 
   # Specifies your project dependencies
@@ -74,6 +75,7 @@ defmodule Constable.Mixfile do
       {:secure_random, "~> 0.1"},
       {:slugger, "~> 0.2"},
       {:wallaby, "~> 0.20", only: :test},
+      {:furlex, "~> 0.3.3"}
     ]
   end
 

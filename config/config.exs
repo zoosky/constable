@@ -26,6 +26,9 @@ config :constable, :permitted_email_domain, System.get_env("PERMITTED_EMAIL_DOMA
 
 config :oauth2, serializers: %{"application/json" => Poison}
 
+config :furlex, Furlex.Oembed,
+  oembed_host: "https://oembed.com"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

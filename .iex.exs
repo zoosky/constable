@@ -1,3 +1,2 @@
-use QuickAlias, Constable
-
-import Ecto.Query
+alias Constable
+alias ConstableWeb
