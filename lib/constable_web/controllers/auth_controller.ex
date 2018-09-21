@@ -45,7 +45,7 @@ defmodule ConstableWeb.AuthController do
   end
 
   def browser_callback(conn, %{"error" => error_message}) do
-    Logger.info("Auth error: #{error_message}")
+    _ = Logger.info("Auth error: #{error_message}")
 
     conn
     |> put_flash(:error, error_message)
@@ -69,7 +69,7 @@ defmodule ConstableWeb.AuthController do
   end
 
   def javascript_callback(conn, %{"error" => error_message}) do
-    Logger.info("Auth error: #{error_message}")
+    _ = Logger.info("Auth error: #{error_message}")
     conn |> redirect(external: "/")
   end
 
@@ -119,7 +119,7 @@ defmodule ConstableWeb.AuthController do
         user |> add_everyone_interest
 
       {:error, _changeset} ->
-        Logger.info(
+        _ = Logger.info(
           "Email address `#{email}` not from permitted `#{@permitted_email_domain}` domain"
         )
 

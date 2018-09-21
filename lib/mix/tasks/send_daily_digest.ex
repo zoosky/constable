@@ -12,7 +12,7 @@ defmodule Mix.Tasks.Constable.SendDailyDigest do
     user_emails = for user <- users do
       user.email
     end
-    Logger.info """
+    _ = Logger.info """
     Users with Daily Digest enabled:
 
     #{inspect user_emails}
