@@ -16,9 +16,8 @@ defmodule Constable.Mixfile do
 
   defp dialyzer_settings do
     [
-      plt_add_deps: true,
-      plt_file: ".dialyzer.plt",
-      flags: ["-Wunderspecs", "-Wno_undefined_callbacks"]
+      flags: [:unmatched_returns, :error_handling, :race_conditions, :underspecs],
+      plt_add_apps: [:mix]
     ]
   end
 
@@ -44,7 +43,7 @@ defmodule Constable.Mixfile do
       {:bamboo, "~> 0.7"},
       {:cors_plug, "~> 1.2"},
       {:cowboy, "~> 1.0"},
-      {:dialyxir, "~> 0.3", only: [:dev]},
+      {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], runtime: false},
       {:earmark, "~> 1.2"},
       {:ecto, "~> 2.1"},
       {:envy, "~> 1.1.1"},
