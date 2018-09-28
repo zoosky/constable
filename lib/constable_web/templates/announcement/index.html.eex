@@ -41,7 +41,7 @@
           to: announcement_path(
             @conn,
             :index,
-            all: AnnouncementController.show_all?(@conn),
+            all: Constable.AnnouncementController.show_all?(@conn),
             page: (@index_page.page_number - 1)),
           class: "page-previous button button-wire" %>
       <% end %>
@@ -51,7 +51,7 @@
           to: announcement_path(
             @conn,
             :index,
-            all: AnnouncementController.show_all?(@conn),
+            all: Constable.AnnouncementController.show_all?(@conn),
             page: (@index_page.page_number + 1)),
           class: "page-next button button-wire" %>
       <% end %>

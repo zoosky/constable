@@ -31,16 +31,14 @@ defmodule ConstableWeb.AuthController do
     token = google_strategy().get_token!(auth_url(conn, :browser_callback), code: code)
     %{"email" => email, "name" => name} = get_userinfo(token)
 
-    case find_or_insert_user(email, name) do
-      nil ->
-        conn
-        |> put_flash(:error, "You must sign up with a #{@permitted_email_domain} email address")
-        |> redirect(external: "/")
-
-      user ->
-        conn
-        |> set_user_id_cookie(user)
-        |> redirect(external: session_path(conn, :new))
+    if user = find_or_insert_user(email, name) do
+      conn
+      |> set_user_id_cookie(user)
+      |> redirect(external: session_path(conn, :new))
+    else
+      conn
+      |> put_flash(:error, "You must sign up with a #{@permitted_email_domain} email address")
+      |> redirect(external: "/")
     end
   end
 
