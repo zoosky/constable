@@ -4,7 +4,7 @@ defmodule Constable.User do
   alias Constable.UserInterest
   alias Constable.Subscription
 
-  @permitted_email_domain Application.fetch_env!(:constable, :permitted_email_domain)
+  @permitted_email_domain "thoughtbot.com"
 
   defimpl Bamboo.Formatter do
     def format_email_address(user, _opts) do
