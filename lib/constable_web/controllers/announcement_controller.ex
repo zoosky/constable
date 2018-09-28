@@ -9,16 +9,23 @@ defmodule ConstableWeb.AnnouncementController do
 
   plug Constable.Plugs.Deslugifier, slugified_key: "id"
 
-  def index(conn, %{"all" => "true"} = params) do
-    index_page = all_announcements() |> Repo.paginate(params)
+  def index(conn, params) do
+    index_page = if show_all?(conn) do
+      all_announcements() |> Repo.paginate(params)
+    else
+      my_announcements(conn) |> Repo.paginate(params)
+    end
 
     conn
     |> assign(:announcements, index_page.entries)
-    |> assign(:show_all, true)
     |> assign(:current_user, preload_interests(conn.assigns.current_user))
     |> assign(:index_page, index_page)
     |> page_title("Announcements")
     |> render("index.html")
+  end
+
+  def show_all?(conn) do
+    conn.params["all"] == "true"
   end
 
   def index(conn, %{"interest" => interest, "page" => page}) do
@@ -26,17 +33,17 @@ defmodule ConstableWeb.AnnouncementController do
     |> redirect(to: interest_path(conn, :show, interest, page: page))
   end
 
-  def index(conn, params) do
-    index_page = my_announcements(conn) |> Repo.paginate(params)
+  # def index(conn, params) do
+  #   index_page = my_announcements(conn) |> Repo.paginate(params)
 
-    conn
-    |> assign(:announcements, index_page.entries)
-    |> assign(:show_all, false)
-    |> assign(:current_user, preload_interests(conn.assigns.current_user))
-    |> assign(:index_page, index_page)
-    |> page_title("Announcements")
-    |> render("index.html")
-  end
+  #   conn
+  #   |> assign(:announcements, index_page.entries)
+  #   |> assign(:show_all, false)
+  #   |> assign(:current_user, preload_interests(conn.assigns.current_user))
+  #   |> assign(:index_page, index_page)
+  #   |> page_title("Announcements")
+  #   |> render("index.html")
+  # end
 
   def show(conn, %{"id" => id}) do
     announcement = Repo.get!(Announcement.with_announcement_list_assocs, id)

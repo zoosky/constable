@@ -11,6 +11,11 @@
         class: class_for("mine", @conn)
       %>
 
+      <%= link gettext("My stuff"),
+        to: announcement_path(@conn, :index),
+        class: class_for("my-stuff", @conn)
+      %>
+
       <%= link to: interest_path(@conn, :index),
         data: [role: "view-all-interests"],
         class: "view-all-interests" do %>
@@ -33,13 +38,21 @@
     <div class="container pagination">
       <%= if !on_first_page?(@index_page) do %>
         <%= link gettext(""),
-          to: announcement_path(@conn, :index, all: @show_all, page: (@index_page.page_number - 1)),
+          to: announcement_path(
+            @conn,
+            :index,
+            all: AnnouncementController.show_all?(@conn),
+            page: (@index_page.page_number - 1)),
           class: "page-previous button button-wire" %>
       <% end %>
 
       <%= if !on_last_page?(@index_page) do %>
         <%= link gettext(""),
-          to: announcement_path(@conn, :index, all: @show_all, page: (@index_page.page_number + 1)),
+          to: announcement_path(
+            @conn,
+            :index,
+            all: AnnouncementController.show_all?(@conn),
+            page: (@index_page.page_number + 1)),
           class: "page-next button button-wire" %>
       <% end %>
     </div>
