@@ -12,8 +12,9 @@
       %>
 
       <%= link gettext("My stuff"),
-        to: announcement_path(@conn, :index),
-        class: class_for("my-stuff", @conn)
+        to: announcement_path(@conn, :index, my_stuff: true),
+        class: class_for("my-stuff", @conn),
+        data: [role: "my-stuff"]
       %>
 
       <%= link to: interest_path(@conn, :index),

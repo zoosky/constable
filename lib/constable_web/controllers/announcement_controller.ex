@@ -9,7 +9,12 @@ defmodule ConstableWeb.AnnouncementController do
 
   plug Constable.Plugs.Deslugifier, slugified_key: "id"
 
-  def index(conn, params) do
+  def index(conn, %{"interest" => interest, "page" => page}) do
+    conn
+    |> redirect(to: interest_path(conn, :show, interest, page: page))
+  end
+
+  def index(conn, _params) do
     paginated_announcements = filter_announcements(conn) |> Repo.paginate
 
     conn
@@ -20,21 +25,20 @@ defmodule ConstableWeb.AnnouncementController do
     |> render("index.html")
   end
 
-  def index(conn, %{"interest" => interest, "page" => page}) do
-    conn
-    |> redirect(to: interest_path(conn, :show, interest, page: page))
-  end
-
   defp filter_announcements(conn) do
-    if show_all?(conn) do
-      all_announcements()
-    else
-      my_announcements(conn)
+    cond do
+      show_all?(conn) -> all_announcements()
+      my_stuff?(conn) -> my_stuff(conn)
+      true -> my_announcements(conn)
     end
   end
 
   def show_all?(conn) do
     conn.params["all"] == "true"
+  end
+
+  def my_stuff?(conn) do
+    conn.params["my_stuff"] == "true"
   end
 
   def show(conn, %{"id" => id}) do
@@ -143,6 +147,13 @@ defmodule ConstableWeb.AnnouncementController do
       |> Map.delete("interests")
 
     {interest_names, announcement_params}
+  end
+
+  defp my_stuff(conn) do
+    conn.assigns.current_user
+    |> Ecto.assoc(:announcements)
+    |> Announcement.with_announcement_list_assocs
+    |> Announcement.last_discussed_first
   end
 
   defp my_announcements(conn) do

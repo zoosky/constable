@@ -25,6 +25,7 @@ defmodule Constable.User do
     has_many :user_interests, UserInterest, on_delete: :delete_all
     has_many :interests, through: [:user_interests, :interest]
     has_many :interesting_announcements, through: [:interests, :announcements]
+    has_many :announcements, Constable.Announcement
     has_many :subscriptions, Subscription, on_delete: :delete_all
 
     timestamps()
